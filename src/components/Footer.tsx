@@ -1,8 +1,9 @@
+
 import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
-    <footer className="bg-secondary border-t border-border">
+    <footer className="bg-gray-50 border-t border-gray-100">
       <div className="container mx-auto px-4 py-12">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           <div>
@@ -64,7 +65,7 @@ const Footer = () => {
             </ul>
           </div>
         </div>
-        <div className="border-t border-border mt-10 pt-8 text-center text-muted-foreground text-sm">
+        <div className="border-t border-gray-200 mt-10 pt-8 text-center text-gray-500 text-sm">
           <p>&copy; {new Date().getFullYear()} AI Interviewer. All rights reserved.</p>
         </div>
       </div>
