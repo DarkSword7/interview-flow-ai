@@ -1,4 +1,3 @@
-
 import { Button } from "@/components/ui/button";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { useState } from "react";
@@ -9,7 +8,7 @@ const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
-    <nav className="bg-white/80 backdrop-blur-md py-4 sticky top-0 z-50 shadow-sm">
+    <nav className="bg-background/80 backdrop-blur-md py-4 sticky top-0 z-50 border-b border-border">
       <div className="container mx-auto px-4 flex items-center justify-between">
         <Link to="/" className="flex items-center gap-2">
           <div className="w-8 h-8 bg-gradient-to-br from-interview-blue to-interview-purple rounded-lg"></div>
@@ -19,13 +18,13 @@ const Navbar = () => {
         {!isMobile ? (
           <div className="flex gap-8">
             <div className="flex items-center gap-6">
-              <Link to="/" className="text-gray-700 hover:text-interview-blue transition-colors">
+              <Link to="/" className="text-foreground/80 hover:text-interview-blue transition-colors">
                 Home
               </Link>
-              <Link to="#features" className="text-gray-700 hover:text-interview-blue transition-colors">
+              <Link to="#features" className="text-foreground/80 hover:text-interview-blue transition-colors">
                 Features
               </Link>
-              <Link to="#pricing" className="text-gray-700 hover:text-interview-blue transition-colors">
+              <Link to="#pricing" className="text-foreground/80 hover:text-interview-blue transition-colors">
                 Pricing
               </Link>
             </div>
@@ -40,7 +39,7 @@ const Navbar = () => {
           </div>
         ) : (
           <>
-            <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="p-2">
+            <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="p-2 text-foreground">
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 {isMenuOpen ? (
                   <path d="M18 6L6 18M6 6l12 12" />
@@ -51,18 +50,18 @@ const Navbar = () => {
             </button>
             
             {isMenuOpen && (
-              <div className="absolute top-full left-0 right-0 bg-white shadow-lg animate-fade-in-down p-4">
+              <div className="absolute top-full left-0 right-0 bg-background border-b border-border shadow-lg animate-fade-in-down p-4">
                 <div className="flex flex-col gap-4">
-                  <Link to="/" className="text-gray-700 hover:text-interview-blue transition-colors">
+                  <Link to="/" className="text-foreground/80 hover:text-interview-blue transition-colors">
                     Home
                   </Link>
-                  <Link to="#features" className="text-gray-700 hover:text-interview-blue transition-colors">
+                  <Link to="#features" className="text-foreground/80 hover:text-interview-blue transition-colors">
                     Features
                   </Link>
-                  <Link to="#pricing" className="text-gray-700 hover:text-interview-blue transition-colors">
+                  <Link to="#pricing" className="text-foreground/80 hover:text-interview-blue transition-colors">
                     Pricing
                   </Link>
-                  <div className="flex flex-col gap-2 pt-2 border-t">
+                  <div className="flex flex-col gap-2 pt-2 border-t border-border">
                     <Button variant="outline" asChild className="w-full">
                       <Link to="/login">Login</Link>
                     </Button>

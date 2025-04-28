@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 const CallToAction = () => {
   return (
-    <div className="bg-white py-16 md:py-24">
+    <div className="bg-background py-16 md:py-24">
       <div className="container mx-auto px-4">
         <div className="max-w-4xl mx-auto bg-gradient-to-r from-interview-purple to-interview-blue rounded-2xl p-10 text-center text-white shadow-2xl overflow-hidden relative animate-fade-in">
           <div className="absolute inset-0 opacity-30" style={{ 
