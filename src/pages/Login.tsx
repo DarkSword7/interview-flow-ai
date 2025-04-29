@@ -1,31 +1,61 @@
-
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useToast } from "@/hooks/use-toast";
+import { signIn } from "@/lib/supabase";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [rememberMe, setRememberMe] = useState(false);
   const { toast } = useToast();
+  const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
-    
-    // Simulate login process
-    setTimeout(() => {
-      setIsLoading(false);
+
+    try {
+      const { data, error } = await signIn(email, password);
+
+      if (error) {
+        toast({
+          title: "Login failed",
+          description: error.message,
+          variant: "destructive",
+        });
+        return;
+      }
+
+      if (data?.session) {
+        toast({
+          title: "Login successful",
+          description: "Welcome back to AI Interviewer!",
+        });
+        navigate("/"); // Redirect to home page
+      }
+    } catch (error) {
       toast({
-        title: "Login successful",
-        description: "Welcome back to AI Interviewer!",
+        title: "An unexpected error occurred",
+        description: "Please try again later",
+        variant: "destructive",
       });
-    }, 1500);
+      console.error("Login error:", error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -34,10 +64,14 @@ const Login = () => {
         <div className="text-center">
           <Link to="/" className="flex items-center justify-center gap-2 mb-6">
             <div className="w-10 h-10 bg-gradient-to-br from-interview-blue to-interview-purple rounded-lg"></div>
-            <span className="text-2xl font-bold gradient-text">AI Interviewer</span>
+            <span className="text-2xl font-bold gradient-text">
+              Interview Flow
+            </span>
           </Link>
           <h1 className="text-3xl font-bold">Welcome back</h1>
-          <p className="mt-2 text-gray-600">Sign in to continue to AI Interviewer</p>
+          <p className="mt-2 text-gray-600">
+            Sign in to continue to AI Interviewer
+          </p>
         </div>
 
         <Card className="border-0 shadow-lg animate-fade-in-up">
@@ -51,10 +85,10 @@ const Login = () => {
             <CardContent className="space-y-4">
               <div className="space-y-2">
                 <Label htmlFor="email">Email</Label>
-                <Input 
-                  id="email" 
-                  type="email" 
-                  placeholder="name@example.com" 
+                <Input
+                  id="email"
+                  type="email"
+                  placeholder="name@example.com"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
@@ -65,15 +99,15 @@ const Login = () => {
               <div className="space-y-2">
                 <div className="flex items-center justify-between">
                   <Label htmlFor="password">Password</Label>
-                  <Link 
-                    to="/forgot-password" 
+                  <Link
+                    to="/forgot-password"
                     className="text-sm text-interview-blue hover:underline"
                   >
                     Forgot password?
                   </Link>
                 </div>
-                <Input 
-                  id="password" 
+                <Input
+                  id="password"
                   type="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
@@ -82,13 +116,19 @@ const Login = () => {
                 />
               </div>
               <div className="flex items-center space-x-2">
-                <Checkbox id="remember" />
-                <Label htmlFor="remember" className="text-sm font-normal">Remember me</Label>
+                <Checkbox
+                  id="remember"
+                  checked={rememberMe}
+                  onCheckedChange={(checked) => setRememberMe(checked === true)}
+                />
+                <Label htmlFor="remember" className="text-sm font-normal">
+                  Remember me
+                </Label>
               </div>
             </CardContent>
             <CardFooter className="flex flex-col space-y-4">
-              <Button 
-                type="submit" 
+              <Button
+                type="submit"
                 className="w-full bg-interview-blue hover:bg-interview-indigo"
                 disabled={isLoading}
               >
@@ -96,7 +136,10 @@ const Login = () => {
               </Button>
               <p className="text-sm text-center text-gray-500">
                 Don't have an account?{" "}
-                <Link to="/signup" className="text-interview-blue hover:underline font-medium">
+                <Link
+                  to="/signup"
+                  className="text-interview-blue hover:underline font-medium"
+                >
                   Sign up
                 </Link>
               </p>
